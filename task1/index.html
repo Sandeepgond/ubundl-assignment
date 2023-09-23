@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Chocolate Pack</title>
+    <style>
+        body{
+            background-color: rgb(197, 181, 181);
+            font-size: 20px;
+            height: 90vh;
+            background-image: url(https://images.unsplash.com/photo-1621939514649-280e2ee25f60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym94JTIwb2YlMjBjaG9jb2xhdGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80);
+        }
+        h1{
+            text-align: center;
+            color: white;
+            font-weight: bolder;
+            font-size: 4rem;
+        }
+        #center_box{
+            width: 50%;
+            margin: auto;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            text-align: center;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            background-color: rgb(137, 160, 101);
+            border-radius: 10px;
+            line-height: 2rem;
+        }
+        button{
+            cursor: pointer;
+            padding: 5px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 20px;
+        }
+        button:hover{
+            color: white;
+            background-color: rgb(145, 133, 133);
+        }
+        #totalPrice{
+            font-size: 25px;
+        }
+        #customPackForm>div>p{
+            font-size: 25px;
+        }
+        .input_style{
+            width: 12%;
+            text-align: center;
+            border:none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Build Your Custom Chocolate Pack</h1>
+    <div id="center_box">
+        <form id="customPackForm">
+            <div class="chocolate">
+                <input type="checkbox" data-price="2.50">
+                <label for="chocolate1"> Chocolate 1 - $2.50</label> &nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" value="Chocolate 2" data-price="2.00">
+                <label for="chocolate2"> Chocolate 2 - $2.00</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="1.50">
+                <label for="chocolate1"> Chocolate 3 - $1.50</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="1.00">
+                <label for="chocolate1"> Chocolate 4 - $1.00</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="2.60">
+                <label for="chocolate1">Chocolate 5 - $2.60</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="2.80">
+                <label for="chocolate1">Chocolate 6 - $2.80</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="5.50">
+                <label for="chocolate1"> Chocolate 7 - $5.50</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div class="chocolate">
+                <input type="checkbox" data-price="3.40">
+                <label for="chocolate1">Chocolate 8 - $3.40</label>&nbsp;
+                <input class="input_style" type="number"  min="0" max="8" value="0">
+            </div>
+            <div>
+                <p>Total Price: <span id="totalPrice">$0.00</span></p>
+            </div>
+            <button onclick="orderfunction()" type="submit">Order</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('customPackForm');
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+        const quantityInputs = form.querySelectorAll('input[type="number"]');
+        const totalPriceSpan = document.getElementById('totalPrice');
+        
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); 
+            calculateTotalPrice();
+        });
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', calculateTotalPrice);
+        });
+        
+        quantityInputs.forEach(function (quantityInput) {
+            quantityInput.addEventListener('input', calculateTotalPrice);
+        });
+        
+        // JavaScript logic for calculating total price
+        let total;
+        function calculateTotalPrice() {
+            total = 0;
+            checkboxes.forEach(function (checkbox, index) {
+                if (checkbox.checked) {
+                    const price = parseFloat(checkbox.getAttribute('data-price'));
+                    const quantity = parseInt(quantityInputs[index].value);
+                    total += price * quantity;
+                }
+            });
+            totalPriceSpan.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function orderfunction(){
+            if(total>0){
+                alert('Order Successfuly placed')
+                window.location.reload()
+            }
+            else{
+                alert('Please select your order ')
+            }
+        }
+    </script>
+</body>
+</html>
